@@ -1,11 +1,11 @@
 #
-# Copyright (C) 2011 The Android Open-Source Project
+# Copyright (C) 2015 The Android Open-Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#      http://www.apache.org/licenses/LICENSE-2.0
+#	  http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -22,24 +22,24 @@
 DEVICE_PACKAGE_OVERLAYS := $(LOCAL_PATH)/overlay
 
 PRODUCT_PACKAGES += \
-    libwpa_client \
-    hostapd \
-    dhcpcd.conf \
-    wpa_supplicant 
+	libwpa_client \
+	hostapd \
+	dhcpcd.conf \
+	wpa_supplicant
 
 PRODUCT_PACKAGES += \
-    charger_res_images
+	charger_res_images
 
 # Live Wallpapers
 PRODUCT_PACKAGES += \
-        LiveWallpapers \
-        LiveWallpapersPicker \
-        VisualizationWallpapers \
-        librs_jni
+	LiveWallpapers \
+	LiveWallpapersPicker \
+	VisualizationWallpapers \
+	librs_jni
 
 PRODUCT_COPY_FILES += \
-        $(LOCAL_PATH)/init.gee-common.rc:root/init.gee-common.rc \
-        $(LOCAL_PATH)/init.gee.usb.rc:root/init.gee.usb.rc
+	$(LOCAL_PATH)/init.gee-common.rc:root/init.gee-common.rc \
+	$(LOCAL_PATH)/init.gee.usb.rc:root/init.gee.usb.rc
 
 PRODUCT_COPY_FILES += \
 	$(LOCAL_PATH)/audio_policy.conf:system/etc/audio_policy.conf
@@ -93,31 +93,31 @@ PRODUCT_COPY_FILES += \
 
 # NFC packages
 PRODUCT_PACKAGES += \
-    libnfc \
-    libnfc_jni \
-    Nfc \
-    Tag \
-    com.android.nfc_extras
+	libnfc \
+	libnfc_jni \
+	Nfc \
+	Tag \
+	com.android.nfc_extras
 
 # NFCEE access control
 ifeq ($(TARGET_BUILD_VARIANT),user)
-    NFCEE_ACCESS_PATH := $(LOCAL_PATH)/nfc/nfcee_access.xml
+	NFCEE_ACCESS_PATH := $(LOCAL_PATH)/nfc/nfcee_access.xml
 else
-    NFCEE_ACCESS_PATH := $(LOCAL_PATH)/nfc/nfcee_access_debug.xml
+	NFCEE_ACCESS_PATH := $(LOCAL_PATH)/nfc/nfcee_access_debug.xml
 endif
 
 # NFC access control + feature files + configuration
 PRODUCT_COPY_FILES += \
-    $(NFCEE_ACCESS_PATH):system/etc/nfcee_access.xml \
-    frameworks/native/data/etc/com.android.nfc_extras.xml:system/etc/permissions/com.android.nfc_extras.xml \
-    frameworks/native/data/etc/android.hardware.nfc.xml:system/etc/permissions/android.hardware.nfc.xml
+	$(NFCEE_ACCESS_PATH):system/etc/nfcee_access.xml \
+	frameworks/native/data/etc/com.android.nfc_extras.xml:system/etc/permissions/com.android.nfc_extras.xml \
+	frameworks/native/data/etc/android.hardware.nfc.xml:system/etc/permissions/android.hardware.nfc.xml
 
 PRODUCT_PROPERTY_OVERRIDES += \
 	ro.opengles.version=196608
 
 # Audio Configuration
 # FIXME: Remove persist.audio.handset.mic and persist.audio.fluence.mode
-#        while switching new audio HAL from legacy HAL
+#		while switching new audio HAL from legacy HAL
 PRODUCT_PROPERTY_OVERRIDES += \
 	persist.audio.handset.mic.type=digital \
 	persist.audio.dualmic.config=endfire \
@@ -140,9 +140,11 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	ro.telephony.ril.config=qcomdsds
 
 #Upto 3 layers can go through overlays
-PRODUCT_PROPERTY_OVERRIDES += persist.hwc.mdpcomp.enable=true
+PRODUCT_PROPERTY_OVERRIDES += \
+	persist.hwc.mdpcomp.enable=true
 
-PRODUCT_TAGS += dalvik.gc.type-precise
+PRODUCT_TAGS += \
+	dalvik.gc.type-precise
 
 PRODUCT_PACKAGES += \
 	librs_jni \
@@ -169,12 +171,13 @@ PRODUCT_PACKAGES += \
 	libaudio-resampler
 
 # Voice processing
-PRODUCT_PACKAGES += libqcomvoiceprocessing
+PRODUCT_PACKAGES += \
+	libqcomvoiceprocessing
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/audio_effects.conf:system/vendor/etc/audio_effects.conf
+	$(LOCAL_PATH)/audio_effects.conf:system/vendor/etc/audio_effects.conf
 
 PRODUCT_PACKAGES += \
-        libmm-omxcore \
+	libmm-omxcore \
 	libdivxdrmdecrypt \
 	libOmxVdec \
 	libOmxVenc \
@@ -201,10 +204,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Enable AAC 5.1 output
 PRODUCT_PROPERTY_OVERRIDES += \
-    media.aac_51_output_enabled=true
+	media.aac_51_output_enabled=true
 
 PRODUCT_PROPERTY_OVERRIDES += \
-        debug.egl.recordable.rgba8888=1
+	debug.egl.recordable.rgba8888=1
 
 PRODUCT_PROPERTY_OVERRIDES += \
 	ro.qc.sensors.wl_dis=true \
