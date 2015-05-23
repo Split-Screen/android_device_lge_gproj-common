@@ -241,29 +241,57 @@ on post-fs-data
     write /sys/module/pm_8x60/modes/cpu1/standalone_power_collapse/suspend_enabled 0
     write /sys/module/pm_8x60/modes/cpu2/standalone_power_collapse/suspend_enabled 0
     write /sys/module/pm_8x60/modes/cpu3/standalone_power_collapse/suspend_enabled 0
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "ondemand"
-    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor "ondemand"
-    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor "ondemand"
-    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor "ondemand"
-    write /sys/devices/system/cpu/cpufreq/ondemand/up_threshold 90
-    write /sys/devices/system/cpu/cpufreq/ondemand/sampling_rate 50000
-    write /sys/devices/system/cpu/cpufreq/ondemand/io_is_busy 1
-    write /sys/devices/system/cpu/cpufreq/ondemand/sampling_down_factor 4
-    write /sys/devices/system/cpu/cpufreq/ondemand/down_differential 10
-    write /sys/devices/system/cpu/cpufreq/ondemand/up_threshold_multi_core 60
-    write /sys/devices/system/cpu/cpufreq/ondemand/down_differential_multi_core 3
-    write /sys/devices/system/cpu/cpufreq/ondemand/optimal_freq 918000
-    write /sys/devices/system/cpu/cpufreq/ondemand/sync_freq 1026000
-    write /sys/devices/system/cpu/cpufreq/ondemand/up_threshold_any_cpu_load 80
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 384000
-    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq 384000
-    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq 384000
-    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq 384000
+    # Governor
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "interactive"
+    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor "interactive"
+    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor "interactive"
+    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor "interactive"
+    
+    # Min/max freq
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 100000
+    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq 100000
+    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq 100000
+    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq 100000
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 1728000
+    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_max_freq 1728000
+    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_max_freq 1728000
+    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_max_freq 1728000
     write /sys/devices/system/cpu/cpu1/online 1
     write /sys/devices/system/cpu/cpu2/online 1
     write /sys/devices/system/cpu/cpu3/online 1
     write /dev/cpuctl/apps/cpu.notify_on_migrate 1
-
+    
+    # GPU
+    write /sys/class/kgsl/kgsl-3d0/pwrscale/trustzone/governor "simple"
+    write /sys/class/kgsl/kgsl-3d0/max_gpuclk 622000000
+    write /sys/class/kgsl/kgsl-3d0/gpuclk 622000000
+    
+    # Stop mpdecision
+    stop mpdecision
+    
+    # INTELLIPLUG
+    # Set your own IntelliPlug Profile (Default one is Balanced)
+    # Enable and Set IntelliPlug Parameters
+    write /sys/module/intelli_plug/parameters/intelli_plug_active 1
+    write /sys/module/intelli_plug/parameters/nr_run_hysteresis 0
+    write /sys/module/intelli_plug/parameters/touch_boost_active 1
+    # 0=Balanced 1=Performance 2=Conservative 3=Eco-Performance 4=Eco-Conservative
+    write /sys/module/intelli_plug/parameters/nr_run_profile_sel 2
+    write /sys/module/intelli_plug/parameters/screen_off_max "disabled"
+    
+    # Read-Ahead
+    write /sys/devices/virtual/bdi/179:0/read_ahead_kb 3072
+    
+    # Gamma, color, contrast
+    write /sys/devices/platform/kcal_ctrl.0/kcal "255 255 255"
+    write /sys/devices/platform/kcal_ctrl.0/kcal_ctrl 1
+    write /sys/devices/platform/mipi_lgit.1537/kgamma_r "208 64 68 118 0 20 0 80 48 2"
+    write /sys/devices/platform/mipi_lgit.1537/kgamma_g "210 64 68 118 0 19 0 80 48 2"
+    write /sys/devices/platform/mipi_lgit.1537/kgamma_b "212 64 68 118 0 19 0 80 48 2"
+    
+    # Fast charging
+    write /sys/kernel/fast_charge/force_fast_charge 1
+    
     chown root system /sys/class/timed_output/vibrator/amp
     chown root system /sys/devices/platform/kcal_ctrl.0/kcal
     chown root system /sys/devices/platform/kcal_ctrl.0/kcal_ctrl
@@ -294,13 +322,14 @@ on charger
     write /sys/devices/system/cpu/cpufreq/ondemand/sampling_rate 50000
     write /sys/devices/system/cpu/cpufreq/ondemand/io_is_busy 1
     write /sys/devices/system/cpu/cpufreq/ondemand/sampling_down_factor 4
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 384000
-    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq 384000
-    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq 384000
-    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq 384000
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 100000
+    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq 100000
+    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq 100000
+    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq 100000
     write /sys/devices/system/cpu/cpu1/online 0
     write /sys/devices/system/cpu/cpu2/online 0
     write /sys/devices/system/cpu/cpu3/online 0
+    write /sys/kernel/fast_charge/force_fast_charge 1
 
 on property:init.svc.wpa_supplicant=stopped
     stop dhcpcd
@@ -428,4 +457,5 @@ service fetch-swv /system/bin/fetch-swv
 on property:dev.bootcomplete=1
     write /sys/devices/virtual/graphics/fb1/hdmi_boot_completed 1
 # LGE_CHANGE_E, 20120914, chaeuk.lee@lge.com
+
 
