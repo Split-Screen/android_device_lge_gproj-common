@@ -143,8 +143,6 @@ public class LgeLteRIL extends RIL implements CommandsInterface {
     responseIccCardStatus(Parcel p) {
         IccCardApplicationStatus ca;
 
-        boolean oldRil = needsOldRilFeature("icccardstatus");
-
         IccCardStatus status = new IccCardStatus();
         int cardState = p.readInt();
         /* Standard stack doesn't recognize REMOVED and SIM_DETECT_INSERTED,
@@ -157,9 +155,7 @@ public class LgeLteRIL extends RIL implements CommandsInterface {
         status.setUniversalPinState(p.readInt());
         status.mGsmUmtsSubscriptionAppIndex = p.readInt();
         status.mCdmaSubscriptionAppIndex = p.readInt();
-
-        if (!oldRil)
-            status.mImsSubscriptionAppIndex = p.readInt();
+        status.mImsSubscriptionAppIndex = p.readInt();
 
         int numApplications = p.readInt();
 
